@@ -1,0 +1,665 @@
+/**
+ * Estilos del área de administración - Estilo Nativo de WordPress
+ */
+
+/* ==========================
+   CONTENEDOR PRINCIPAL
+   ========================== */
+.ultima-milla-admin {
+    margin: 20px 20px 0 0;
+}
+
+.ultima-milla-admin h1 {
+    padding-bottom: 0;
+}
+
+.ultima-milla-admin .card {
+    max-width: 100% !important;
+}
+
+/* ==========================
+   POSTBOX (Cards de WordPress)
+   ========================== */
+.postbox {
+    margin-bottom: 20px;
+}
+
+.postbox .inside {
+    margin: 0;
+    padding: 12px;
+}
+
+.postbox h2,
+.postbox h3 {
+    margin: 0;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* ==========================
+   DATATABLE PERSONALIZACIÓN
+   ========================== */
+
+/* Hacer que DataTables se vea como WordPress */
+.dataTables_wrapper {
+    margin-top: 10px;
+}
+
+/* Tablas sin DataTables también */
+.wp-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #fff;
+    margin-top: 10px;
+}
+
+.wp-list-table thead th {
+    padding: 8px 10px;
+    font-weight: 600;
+    text-align: left;
+    background: #f6f7f7;
+    border-bottom: 1px solid #c3c4c7;
+    vertical-align: middle;
+}
+
+.wp-list-table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #c3c4c7;
+    vertical-align: middle;
+}
+
+.wp-list-table tbody tr:hover {
+    background-color: #f6f7f7;
+}
+
+.wp-list-table.striped tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.wp-list-table.striped tbody tr:nth-child(odd):hover {
+    background-color: #f6f7f7;
+}
+
+/* Botón copiar dentro de tabla */
+.wp-list-table .copiar-shortcode {
+    padding: 3px 8px;
+    min-width: 0;
+    height: auto;
+}
+
+.wp-list-table .copiar-shortcode .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* Botones de acción en grupo */
+.button-group .button {
+    margin-right: 5px;
+}
+
+.button-group .button:last-child {
+    margin-right: 0;
+}
+
+/* Botón de guardar formulario destacado */
+#btn-guardar-formulario {
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+#btn-guardar-formulario .dashicons {
+    margin-right: 5px;
+}
+
+/* Mensaje de guardado */
+#save-status {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+#save-status .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+    margin-bottom: 10px;
+}
+
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label {
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    min-width: 60px;
+    padding: 0 24px 0 8px;
+    height: 30px;
+    line-height: 2;
+    vertical-align: middle;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 5px;
+    padding: 0 8px;
+    height: 30px;
+    line-height: 2;
+    min-width: 200px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    border-color: #2271b1;
+    outline: 2px solid transparent;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+
+/* Tabla */
+table.dataTable {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    margin: 0;
+}
+
+table.dataTable thead th {
+    padding: 8px 10px;
+    font-weight: 600;
+    text-align: left;
+    background: #f6f7f7;
+    border-bottom: 1px solid #c3c4c7;
+}
+
+table.dataTable thead th:hover {
+    color: #2271b1;
+}
+
+table.dataTable tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #c3c4c7;
+    vertical-align: middle;
+}
+
+table.dataTable tbody tr:hover {
+    background-color: #f6f7f7;
+}
+
+table.dataTable.stripe tbody tr.odd,
+table.dataTable.display tbody tr.odd {
+    background-color: #f9f9f9;
+}
+
+table.dataTable.stripe tbody tr.odd:hover,
+table.dataTable.display tbody tr.odd:hover {
+    background-color: #f6f7f7;
+}
+
+/* Ordenamiento */
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+    cursor: pointer;
+    position: relative;
+}
+
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_desc:before {
+    right: 1em;
+    content: "\f156";
+    font-family: dashicons;
+    color: #a7aaad;
+}
+
+table.dataTable thead .sorting_asc:before {
+    content: "\f142";
+    color: #2271b1;
+}
+
+table.dataTable thead .sorting_desc:before {
+    content: "\f140";
+    color: #2271b1;
+}
+
+/* Paginación */
+.dataTables_wrapper .dataTables_paginate {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 2px 6px;
+    margin-left: 2px;
+    text-decoration: none;
+    border: 1px solid #c3c4c7;
+    border-radius: 2px;
+    background: #f6f7f7;
+    color: #2c3338;
+    cursor: pointer;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #2271b1;
+    color: #fff;
+    border-color: #2271b1;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #2271b1;
+    color: #fff;
+    border-color: #2271b1;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    color: #a7aaad;
+    cursor: default;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+    background: #f6f7f7;
+    color: #a7aaad;
+    border-color: #c3c4c7;
+}
+
+/* Info */
+.dataTables_wrapper .dataTables_info {
+    padding-top: 10px;
+    color: #50575e;
+}
+
+/* ==========================
+   BADGES (Estados)
+   ========================== */
+.um-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.um-badge.warning {
+    background: #fcf3cf;
+    color: #856404;
+}
+
+.um-badge.info {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.um-badge.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.um-badge.danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.um-badge.secondary {
+    background: #e2e3e5;
+    color: #383d41;
+}
+
+/* ==========================
+   BOTONES PERSONALIZADOS
+   ========================== */
+.button-group {
+    display: inline-flex;
+    gap: 5px;
+}
+
+.button .dashicons {
+    width: auto;
+    height: auto;
+    font-size: 16px;
+    line-height: 1;
+    vertical-align: text-bottom;
+}
+
+/* Botones de filtro rápido */
+.um-filter-buttons {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f6f7f7;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+}
+
+.um-filter-buttons strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #1d2327;
+}
+
+.um-filter-buttons .button {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.um-filter-buttons .button.active {
+    background: #2271b1;
+    color: #fff;
+    border-color: #2271b1;
+}
+
+/* Botón limpiar búsqueda */
+#btn-limpiar-busqueda {
+    margin-left: 5px;
+    height: 30px;
+    line-height: 28px;
+    padding: 0 10px;
+    vertical-align: middle;
+}
+
+/* ==========================
+   MODALES (WordPress Style)
+   ========================== */
+.um-modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999998;
+}
+
+.um-modal-backdrop.active {
+    display: block;
+}
+
+.um-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow: auto;
+    z-index: 999999;
+}
+
+.um-modal.active {
+    display: block;
+}
+
+.um-modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #c3c4c7;
+    background: #f6f7f7;
+}
+
+.um-modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.um-modal-body {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.um-modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #c3c4c7;
+    background: #f6f7f7;
+    text-align: right;
+}
+
+.um-modal-footer .button {
+    margin-left: 5px;
+}
+
+.um-modal-close {
+    float: right;
+    background: transparent;
+    border: 0;
+    color: #50575e;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+    padding: 0;
+}
+
+.um-modal-close:hover {
+    color: #d63638;
+}
+
+.um-modal-close .dashicons {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+}
+
+/* ==========================
+   FORMULARIO BUILDER
+   ========================== */
+.um-form-field-item {
+    padding: 12px;
+    margin-bottom: 10px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.um-form-field-item:hover {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+
+.um-form-field-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+}
+
+.um-form-field-info p {
+    margin: 0;
+    color: #646970;
+    font-size: 13px;
+}
+
+.um-form-field-info code {
+    background: #f6f7f7;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+/* Shortcode display */
+.um-shortcode-box {
+    background: #f6f7f7;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.um-shortcode-box code {
+    font-size: 16px;
+    font-weight: 600;
+    color: #d63638;
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+/* ==========================
+   LAYOUT DE 2 COLUMNAS (WordPress Post-Style)
+   ========================== */
+#poststuff {
+    padding-top: 10px;
+}
+
+#post-body.columns-2 {
+    margin-right: 300px;
+}
+
+#post-body-content {
+    float: left;
+    width: 100%;
+}
+
+#postbox-container-1 {
+    float: right;
+    margin-right: -300px;
+    width: 280px;
+}
+
+.postbox {
+    margin-bottom: 20px;
+}
+
+.postbox h2.hndle {
+    border-bottom: 1px solid #c3c4c7;
+    cursor: default;
+    font-size: 14px;
+    margin: 0;
+    padding: 8px 12px;
+    line-height: 1.4;
+}
+
+.postbox .inside {
+    padding: 0 12px 12px;
+    margin: 12px 0;
+}
+
+.postbox .inside ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.postbox .inside ul li {
+    margin-bottom: 8px;
+}
+
+@media screen and (max-width: 850px) {
+    #post-body.columns-2 {
+        margin-right: 0;
+    }
+    
+    #postbox-container-1 {
+        float: none;
+        margin-right: 0;
+        width: 100%;
+    }
+}
+
+/* ==========================
+   UTILIDADES
+   ========================== */
+.text-primary {
+    color: #2271b1 !important;
+}
+
+.text-success {
+    color: #00a32a !important;
+}
+
+.text-danger {
+    color: #d63638 !important;
+}
+
+.text-muted {
+    color: #646970 !important;
+}
+
+.mb-0 { margin-bottom: 0 !important; }
+.mb-1 { margin-bottom: 5px !important; }
+.mb-2 { margin-bottom: 10px !important; }
+.mb-3 { margin-bottom: 15px !important; }
+.mb-4 { margin-bottom: 20px !important; }
+
+.mt-0 { margin-top: 0 !important; }
+.mt-1 { margin-top: 5px !important; }
+.mt-2 { margin-top: 10px !important; }
+.mt-3 { margin-top: 15px !important; }
+.mt-4 { margin-top: 20px !important; }
+
+.p-0 { padding: 0 !important; }
+.p-1 { padding: 5px !important; }
+.p-2 { padding: 10px !important; }
+.p-3 { padding: 15px !important; }
+
+.d-flex {
+    display: flex !important;
+}
+
+.justify-content-between {
+    justify-content: space-between !important;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+/* ==========================
+   SPINNER (WordPress)
+   ========================== */
+.um-spinner {
+    background: url('../../../../wp-admin/images/spinner.gif') no-repeat;
+    background-size: 20px 20px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    opacity: 0.7;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-resolution: 2dppx) {
+    .um-spinner {
+        background-image: url('../../../../wp-admin/images/spinner-2x.gif');
+    }
+}
+
+/* ==========================
+   RESPONSIVE
+   ========================== */
+@media screen and (max-width: 782px) {
+    .um-modal {
+        width: 95%;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+    
+    .dataTables_wrapper .dataTables_filter input {
+        width: 100%;
+        min-width: auto;
+    }
+}

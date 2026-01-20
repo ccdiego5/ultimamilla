@@ -1,0 +1,103 @@
+/**
+ * Estilos del frontend
+ */
+
+.ultima-milla-form-wrapper,
+.ultima-milla-solicitudes-wrapper {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 15px;
+}
+
+.ultima-milla-form-wrapper .card,
+.ultima-milla-solicitudes-wrapper .card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.ultima-milla-form-wrapper .card-title,
+.ultima-milla-solicitudes-wrapper .card-title {
+    color: #333;
+    font-weight: 600;
+}
+
+.ultima-milla-form-wrapper .form-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.ultima-milla-form-wrapper .btn-primary {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.ultima-milla-solicitudes-wrapper .table {
+    margin-bottom: 0;
+}
+
+.ultima-milla-solicitudes-wrapper .badge {
+    padding: 0.5em 0.75em;
+    font-size: 0.875rem;
+}
+
+/* Estados visuales para formulario */
+.form-control:focus,
+.form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.was-validated .form-control:valid,
+.was-validated .form-select:valid {
+    border-color: #198754;
+}
+
+.was-validated .form-control:invalid,
+.was-validated .form-select:invalid {
+    border-color: #dc3545;
+}
+
+/* Animaciones */
+.spinner-border {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.15em;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .ultima-milla-form-wrapper,
+    .ultima-milla-solicitudes-wrapper {
+        margin: 20px auto;
+        padding: 0 10px;
+    }
+    
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+    
+    .btn {
+        font-size: 0.875rem;
+    }
+}
+
+/* Modal personalizado */
+.modal-content {
+    border-radius: 8px;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+.modal-header .btn-close {
+    filter: brightness(0) invert(1);
+}
+
+.modal-title {
+    font-weight: 600;
+}
