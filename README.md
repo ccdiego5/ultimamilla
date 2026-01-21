@@ -848,39 +848,6 @@ wp_ajax_um_eliminar_formulario
 
 ---
 
-## 🎯 Próximas Mejoras Sugeridas
-
-- [ ] Notificaciones por email al cambiar estados
-- [ ] Integración con Google Maps para rutas
-- [ ] Dashboard con estadísticas y gráficos
-- [ ] Exportar solicitudes a CSV/Excel
-- [ ] API REST para integración con apps móviles
-- [ ] Sistema de calificación del servicio
-- [ ] Chat en tiempo real entre cliente y mensajero
-- [ ] Cálculo automático de tarifas por distancia
-- [ ] Historial de cambios de estado (auditoría)
-- [ ] Múltiples idiomas (POT/PO files)
-
----
-
-## 📞 Soporte y Contribución
-
-### **Reportar Issues**
-Si encuentras un bug o tienes una sugerencia:
-1. Ve al repositorio: https://github.com/ccdiego5/ultimamilla
-2. Abre un "Issue" con descripción detallada
-3. Incluye capturas de pantalla si es posible
-
-### **Contribuir**
-Pull requests son bienvenidos:
-1. Fork el repositorio
-2. Crea una rama: `git checkout -b feature/nueva-funcionalidad`
-3. Commit cambios: `git commit -m 'Agregar nueva funcionalidad'`
-4. Push a la rama: `git push origin feature/nueva-funcionalidad`
-5. Abre un Pull Request
-
----
-
 ## 📄 Licencia
 
 Este plugin está licenciado bajo **GPL v2 o posterior**.
