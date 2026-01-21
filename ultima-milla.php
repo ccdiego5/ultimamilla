@@ -130,8 +130,23 @@ class Ultima_Milla_Plugin {
         // Inicializar clase de formularios (para manejar acciones admin_init)
         Ultima_Milla_Admin_Formularios::init();
         
+        // Auto-asignar rol de cliente al registrarse
+        add_action('user_register', array($this, 'auto_asignar_rol_cliente'));
+        
         // Cargar traducciones
         load_plugin_textdomain('ultima-milla', false, dirname(ULTIMA_MILLA_PLUGIN_BASENAME) . '/languages');
+    }
+    
+    /**
+     * Auto-asignar rol de "Cliente Última Milla" al registrarse
+     */
+    public function auto_asignar_rol_cliente($user_id) {
+        $user = get_userdata($user_id);
+        
+        // Solo asignar si el usuario no tiene rol o tiene el rol 'subscriber'
+        if (empty($user->roles) || in_array('subscriber', $user->roles)) {
+            $user->set_role('um_cliente');
+        }
     }
     
     /**
@@ -169,6 +184,16 @@ class Ultima_Milla_Plugin {
                 'ultima-milla-formularios',
                 array('Ultima_Milla_Admin_Formularios', 'render_page')
             );
+            
+            // Submenú: Ayuda y Shortcodes
+            add_submenu_page(
+                'ultima-milla',
+                __('Ayuda y Shortcodes', 'ultima-milla'),
+                __('Ayuda y Shortcodes', 'ultima-milla'),
+                'manage_options',
+                'ultima-milla-ayuda',
+                array($this, 'render_ayuda_page')
+            );
         }
         
         // Remover primer submenú duplicado
@@ -181,6 +206,267 @@ class Ultima_Milla_Plugin {
     public function render_main_page() {
         wp_redirect(admin_url('admin.php?page=ultima-milla-solicitudes'));
         exit;
+    }
+    
+    /**
+     * Página de ayuda y shortcodes
+     */
+    public function render_ayuda_page() {
+        ?>
+        <div class="wrap ultima-milla-admin">
+            <h1 class="wp-heading-inline">
+                <?php _e('Ayuda y Shortcodes', 'ultima-milla'); ?>
+            </h1>
+            
+            <hr class="wp-header-end">
+            
+            <div class="postbox">
+                <h2 class="hndle"><?php _e('Shortcodes Disponibles', 'ultima-milla'); ?></h2>
+                <div class="inside">
+                    <p><?php _e('Copia y pega estos shortcodes en tus páginas de WordPress:', 'ultima-milla'); ?></p>
+                    
+                    <table class="wp-list-table widefat fixed striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;"><?php _e('Shortcode', 'ultima-milla'); ?></th>
+                                <th><?php _e('Descripción', 'ultima-milla'); ?></th>
+                                <th style="width: 120px;"><?php _e('Acción', 'ultima-milla'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>[ultima_milla_form id="X"]</code></td>
+                                <td>
+                                    <strong><?php _e('Formulario para crear solicitudes', 'ultima-milla'); ?></strong><br>
+                                    <span class="description"><?php _e('Solo visible para usuarios logueados. Reemplaza X con el ID del formulario.', 'ultima-milla'); ?></span>
+                                </td>
+                                <td>
+                                    <a href="<?php echo admin_url('admin.php?page=ultima-milla-formularios'); ?>" class="button button-small">
+                                        <?php _e('Ver Formularios', 'ultima-milla'); ?>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>[ultima_milla_mis_solicitudes]</code></td>
+                                <td>
+                                    <strong><?php _e('Listado de solicitudes del cliente', 'ultima-milla'); ?></strong><br>
+                                    <span class="description"><?php _e('Con DataTables (búsqueda, filtrado, paginación). Solo usuarios logueados.', 'ultima-milla'); ?></span>
+                                </td>
+                                <td>
+                                    <button type="button" class="button button-small button-primary copiar-shortcode" 
+                                            data-shortcode="[ultima_milla_mis_solicitudes]">
+                                        <span class="dashicons dashicons-admin-page"></span> <?php _e('Copiar', 'ultima-milla'); ?>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="postbox">
+                <h2 class="hndle"><?php _e('Sistema de Registro y Login', 'ultima-milla'); ?></h2>
+                <div class="inside">
+                    <h3><?php _e('Paso 1: Habilitar el Registro Público', 'ultima-milla'); ?></h3>
+                    <p>
+                        <a href="<?php echo admin_url('options-general.php'); ?>" class="button button-primary">
+                            <span class="dashicons dashicons-admin-settings" style="vertical-align: middle;"></span>
+                            <?php _e('Ir a Ajustes → Generales', 'ultima-milla'); ?>
+                        </a>
+                    </p>
+                    <p class="description"><?php _e('Marca la casilla "Cualquiera puede registrarse" y guarda los cambios.', 'ultima-milla'); ?></p>
+                    
+                    <hr style="margin: 20px 0;">
+                    
+                    <h3><?php _e('Paso 2: URLs de Registro y Login', 'ultima-milla'); ?></h3>
+                    
+                    <table class="form-table">
+                        <tr>
+                            <th scope="row"><?php _e('URL de Registro:', 'ultima-milla'); ?></th>
+                            <td>
+                                <div class="um-shortcode-box">
+                                    <code><?php echo wp_registration_url(); ?></code>
+                                </div>
+                                <button type="button" class="button button-small copiar-shortcode" 
+                                        data-shortcode="<?php echo esc_attr(wp_registration_url()); ?>">
+                                    <span class="dashicons dashicons-admin-page"></span> <?php _e('Copiar URL', 'ultima-milla'); ?>
+                                </button>
+                                <p class="description"><?php _e('Los clientes irán aquí para crear su cuenta', 'ultima-milla'); ?></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?php _e('URL de Login:', 'ultima-milla'); ?></th>
+                            <td>
+                                <div class="um-shortcode-box">
+                                    <code><?php echo wp_login_url(); ?></code>
+                                </div>
+                                <button type="button" class="button button-small copiar-shortcode" 
+                                        data-shortcode="<?php echo esc_attr(wp_login_url()); ?>">
+                                    <span class="dashicons dashicons-admin-page"></span> <?php _e('Copiar URL', 'ultima-milla'); ?>
+                                </button>
+                                <p class="description"><?php _e('Los clientes irán aquí para iniciar sesión', 'ultima-milla'); ?></p>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <div class="notice notice-info inline">
+                        <p>
+                            <strong><?php _e('Tip:', 'ultima-milla'); ?></strong>
+                            <?php _e('Agrega estas URLs en tu menú de navegación para que los clientes puedan acceder fácilmente.', 'ultima-milla'); ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="postbox">
+                <h2 class="hndle"><?php _e('Auto-Asignación de Rol', 'ultima-milla'); ?></h2>
+                <div class="inside">
+                    <div class="notice notice-success inline">
+                        <p>
+                            <strong><?php _e('¡Activado automáticamente!', 'ultima-milla'); ?></strong><br>
+                            <?php _e('Cuando un usuario se registre usando el sistema nativo de WordPress, automáticamente se le asignará el rol de "Cliente Última Milla".', 'ultima-milla'); ?>
+                        </p>
+                    </div>
+                    
+                    <h4><?php _e('¿Cómo funciona?', 'ultima-milla'); ?></h4>
+                    <ol>
+                        <li><?php _e('Usuario va a la URL de registro', 'ultima-milla'); ?></li>
+                        <li><?php _e('Completa el formulario de WordPress', 'ultima-milla'); ?></li>
+                        <li><?php _e('El plugin detecta el nuevo registro', 'ultima-milla'); ?></li>
+                        <li><?php _e('Automáticamente asigna el rol "Cliente Última Milla"', 'ultima-milla'); ?></li>
+                        <li><?php _e('El usuario puede iniciar sesión y crear solicitudes', 'ultima-milla'); ?></li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="postbox">
+                <h2 class="hndle"><?php _e('Configuración de Páginas', 'ultima-milla'); ?></h2>
+                <div class="inside">
+                    <div class="notice notice-success inline">
+                        <p>
+                            <strong><?php _e('Paso a paso para crear tus páginas:', 'ultima-milla'); ?></strong>
+                        </p>
+                    </div>
+                    
+                    <h3><?php _e('Paso 1: Crear Páginas en WordPress', 'ultima-milla'); ?></h3>
+                    <p>
+                        <a href="<?php echo admin_url('post-new.php?post_type=page'); ?>" class="button button-primary" target="_blank">
+                            <span class="dashicons dashicons-plus-alt" style="vertical-align: middle;"></span>
+                            <?php _e('Crear Nueva Página', 'ultima-milla'); ?>
+                        </a>
+                    </p>
+                    
+                    <hr style="margin: 20px 0;">
+                    
+                    <h3><?php _e('Paso 2: Configurar Páginas Recomendadas', 'ultima-milla'); ?></h3>
+                    
+                    <table class="wp-list-table widefat fixed striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;"><?php _e('Nombre de Página', 'ultima-milla'); ?></th>
+                                <th style="width: 40%;"><?php _e('Shortcode a Pegar', 'ultima-milla'); ?></th>
+                                <th><?php _e('Descripción', 'ultima-milla'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong><?php _e('Solicitar Servicio', 'ultima-milla'); ?></strong></td>
+                                <td>
+                                    <div class="um-shortcode-box" style="display: inline-block; background: #f0f0f1; padding: 5px 10px; border-radius: 3px;">
+                                        <code>[ultima_milla_form id="<?php 
+                                            // Obtener el primer formulario publicado
+                                            $forms = get_posts(array(
+                                                'post_type' => 'um_formulario',
+                                                'post_status' => 'publish',
+                                                'posts_per_page' => 1
+                                            ));
+                                            echo !empty($forms) ? $forms[0]->ID : '1';
+                                        ?>"]</code>
+                                    </div>
+                                    <button type="button" class="button button-small copiar-shortcode" 
+                                            data-shortcode="[ultima_milla_form id=&quot;<?php echo !empty($forms) ? $forms[0]->ID : '1'; ?>&quot;]">
+                                        <span class="dashicons dashicons-admin-page"></span>
+                                    </button>
+                                </td>
+                                <td>
+                                    <span class="description"><?php _e('Formulario para que los clientes creen solicitudes. Solo visible si están logueados.', 'ultima-milla'); ?></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong><?php _e('Mis Solicitudes', 'ultima-milla'); ?></strong></td>
+                                <td>
+                                    <div class="um-shortcode-box" style="display: inline-block; background: #f0f0f1; padding: 5px 10px; border-radius: 3px;">
+                                        <code>[ultima_milla_mis_solicitudes]</code>
+                                    </div>
+                                    <button type="button" class="button button-small copiar-shortcode" 
+                                            data-shortcode="[ultima_milla_mis_solicitudes]">
+                                        <span class="dashicons dashicons-admin-page"></span>
+                                    </button>
+                                </td>
+                                <td>
+                                    <span class="description"><?php _e('Lista de solicitudes del cliente con DataTables. Solo visible si están logueados.', 'ultima-milla'); ?></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="notice notice-info inline" style="margin-top: 20px;">
+                        <p>
+                            <strong><?php _e('Instrucciones:', 'ultima-milla'); ?></strong>
+                        </p>
+                        <ol>
+                            <li><?php _e('Haz clic en "Crear Nueva Página" arriba', 'ultima-milla'); ?></li>
+                            <li><?php _e('Dale un título (ej: "Solicitar Servicio" o "Mis Solicitudes")', 'ultima-milla'); ?></li>
+                            <li><?php _e('Copia el shortcode correspondiente usando el botón de copiar', 'ultima-milla'); ?></li>
+                            <li><?php _e('Pégalo en el contenido de la página (en el editor de bloques o clásico)', 'ultima-milla'); ?></li>
+                            <li><?php _e('Publica la página', 'ultima-milla'); ?></li>
+                        </ol>
+                    </div>
+                    
+                    <hr style="margin: 20px 0;">
+                    
+                    <h3><?php _e('Paso 3: Agregar al Menú (Opcional)', 'ultima-milla'); ?></h3>
+                    <p>
+                        <a href="<?php echo admin_url('nav-menus.php'); ?>" class="button" target="_blank">
+                            <span class="dashicons dashicons-menu-alt" style="vertical-align: middle;"></span>
+                            <?php _e('Ir a Apariencia → Menús', 'ultima-milla'); ?>
+                        </a>
+                    </p>
+                    <p class="description"><?php _e('Agrega las páginas que creaste y también puedes agregar enlaces personalizados a Login y Registro.', 'ultima-milla'); ?></p>
+                </div>
+            </div>
+            
+            <div class="postbox">
+                <h2 class="hndle"><?php _e('Comportamiento de Seguridad', 'ultima-milla'); ?></h2>
+                <div class="inside">
+                    <table class="form-table">
+                        <tr>
+                            <th scope="row" style="width: 250px;"><?php _e('Usuario NO logueado:', 'ultima-milla'); ?></th>
+                            <td>
+                                <span class="dashicons dashicons-lock" style="color: #d63638;"></span>
+                                <?php _e('Verá un mensaje "Acceso Restringido" con botones para:', 'ultima-milla'); ?>
+                                <ul style="margin-top: 10px;">
+                                    <li><strong><?php _e('Iniciar Sesión', 'ultima-milla'); ?></strong> (redirige a <?php echo wp_login_url(); ?>)</li>
+                                    <li><strong><?php _e('Registrarse', 'ultima-milla'); ?></strong> (redirige a <?php echo wp_registration_url(); ?>)</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?php _e('Usuario logueado:', 'ultima-milla'); ?></th>
+                            <td>
+                                <span class="dashicons dashicons-unlock" style="color: #00a32a;"></span>
+                                <?php _e('Verá el contenido completo:', 'ultima-milla'); ?>
+                                <ul style="margin-top: 10px;">
+                                    <li><?php _e('Formulario de solicitud (si es la página con ese shortcode)', 'ultima-milla'); ?></li>
+                                    <li><?php _e('Tabla de sus solicitudes con DataTables (si es la página de "Mis Solicitudes")', 'ultima-milla'); ?></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <?php
     }
     
     /**
@@ -287,11 +573,53 @@ class Ultima_Milla_Plugin {
             true
         );
         
+        // SweetAlert2 CSS
+        wp_enqueue_style(
+            'sweetalert2',
+            'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css',
+            array(),
+            '11'
+        );
+        
+        // SweetAlert2 JS
+        wp_enqueue_script(
+            'sweetalert2',
+            'https://cdn.jsdelivr.net/npm/sweetalert2@11',
+            array('jquery'),
+            '11',
+            true
+        );
+        
+        // DataTables CSS (para tabla de solicitudes del cliente)
+        wp_enqueue_style(
+            'datatables',
+            'https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css',
+            array('bootstrap-5'),
+            '1.13.8'
+        );
+        
+        // DataTables JS
+        wp_enqueue_script(
+            'datatables',
+            'https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js',
+            array('jquery'),
+            '1.13.8',
+            true
+        );
+        
+        wp_enqueue_script(
+            'datatables-bootstrap5',
+            'https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js',
+            array('datatables'),
+            '1.13.8',
+            true
+        );
+        
         // Estilos personalizados
         wp_enqueue_style(
             'ultima-milla-frontend',
             ULTIMA_MILLA_PLUGIN_URL . 'assets/css/frontend.css',
-            array('bootstrap-5'),
+            array('bootstrap-5', 'datatables'),
             ULTIMA_MILLA_VERSION
         );
         
@@ -299,7 +627,7 @@ class Ultima_Milla_Plugin {
         wp_enqueue_script(
             'ultima-milla-frontend',
             ULTIMA_MILLA_PLUGIN_URL . 'assets/js/frontend.js',
-            array('jquery', 'bootstrap-5'),
+            array('jquery', 'bootstrap-5', 'sweetalert2', 'datatables-bootstrap5'),
             ULTIMA_MILLA_VERSION,
             true
         );

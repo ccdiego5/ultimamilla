@@ -23,7 +23,7 @@ class Ultima_Milla_Ajax_Handlers {
         add_action('wp_ajax_um_guardar_formulario', array(__CLASS__, 'guardar_formulario'));
         add_action('wp_ajax_um_eliminar_formulario', array(__CLASS__, 'eliminar_formulario'));
         
-        // Para usuarios no autenticados (si se permite)
+        // Para usuarios no autenticados (pueden crear solicitudes)
         add_action('wp_ajax_nopriv_um_crear_solicitud', array(__CLASS__, 'crear_solicitud'));
     }
     

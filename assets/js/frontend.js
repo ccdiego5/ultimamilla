@@ -191,6 +191,41 @@
             });
         });
         
+        // ============================================
+        // DATATABLE PARA MIS SOLICITUDES (CLIENTE)
+        // ============================================
+        if ($('#tabla-mis-solicitudes').length) {
+            $('#tabla-mis-solicitudes').DataTable({
+                language: {
+                    processing: 'Procesando...',
+                    search: 'Buscar:',
+                    lengthMenu: 'Mostrar _MENU_ solicitudes',
+                    info: 'Mostrando _START_ a _END_ de _TOTAL_ solicitudes',
+                    infoEmpty: 'Mostrando 0 a 0 de 0 solicitudes',
+                    infoFiltered: '(filtrado de _MAX_ solicitudes totales)',
+                    loadingRecords: 'Cargando...',
+                    zeroRecords: 'No se encontraron solicitudes coincidentes',
+                    emptyTable: 'No hay solicitudes disponibles',
+                    paginate: {
+                        first: 'Primero',
+                        previous: 'Anterior',
+                        next: 'Siguiente',
+                        last: 'Último'
+                    }
+                },
+                responsive: true,
+                pageLength: 10,
+                order: [[1, 'desc']], // Ordenar por fecha descendente
+                columnDefs: [
+                    {
+                        targets: -1, // Última columna (Acciones)
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+        }
+        
         // Auto-generar nombre de campo basado en la etiqueta
         $('#nuevo-campo-label').on('blur', function() {
             const label = $(this).val();
@@ -206,6 +241,7 @@
                 nameField.val(name);
             }
         });
+        
         
     });
     

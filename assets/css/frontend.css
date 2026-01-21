@@ -4,9 +4,9 @@
 
 .ultima-milla-form-wrapper,
 .ultima-milla-solicitudes-wrapper {
-    max-width: 800px;
+    max-width: 100%;
     margin: 40px auto;
-    padding: 0 15px;
+    padding: 0 0px;
 }
 
 .ultima-milla-form-wrapper .card,

@@ -32,6 +32,37 @@ class Ultima_Milla_Shortcodes {
             return '<div class="alert alert-danger">' . __('ID de formulario inválido', 'ultima-milla') . '</div>';
         }
         
+        // Verificar si el usuario está logueado
+        if (!is_user_logged_in()) {
+            ob_start();
+            ?>
+            <div class="ultima-milla-form-wrapper">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="card-title mb-4"><?php _e('Acceso Restringido', 'ultima-milla'); ?></h3>
+                        <p class="mb-4"><?php _e('Debes iniciar sesión o registrarte para solicitar un servicio.', 'ultima-milla'); ?></p>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <a href="<?php echo wp_login_url(get_permalink()); ?>" class="btn btn-primary btn-lg">
+                                <span class="dashicons dashicons-unlock" style="vertical-align: middle;"></span>
+                                <?php _e('Iniciar Sesión', 'ultima-milla'); ?>
+                            </a>
+                            <a href="<?php echo wp_registration_url(); ?>" class="btn btn-success btn-lg">
+                                <span class="dashicons dashicons-admin-users" style="vertical-align: middle;"></span>
+                                <?php _e('Registrarse', 'ultima-milla'); ?>
+                            </a>
+                        </div>
+                        
+                        <p class="mt-4 mb-0 text-muted">
+                            <small><?php _e('El registro es gratuito y solo toma un minuto', 'ultima-milla'); ?></small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <?php
+            return ob_get_clean();
+        }
+        
         // Obtener el formulario
         $form = get_post($form_id);
         
@@ -185,8 +216,35 @@ class Ultima_Milla_Shortcodes {
      * Uso: [ultima_milla_mis_solicitudes]
      */
     public static function render_mis_solicitudes($atts) {
+        // Verificar si el usuario está logueado
         if (!is_user_logged_in()) {
-            return '<div class="alert alert-warning">' . __('Debes iniciar sesión para ver tus solicitudes', 'ultima-milla') . '</div>';
+            ob_start();
+            ?>
+            <div class="ultima-milla-solicitudes-wrapper">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <h3 class="card-title mb-4"><?php _e('Acceso Restringido', 'ultima-milla'); ?></h3>
+                        <p class="mb-4"><?php _e('Debes iniciar sesión o registrarte para ver tus solicitudes.', 'ultima-milla'); ?></p>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <a href="<?php echo wp_login_url(get_permalink()); ?>" class="btn btn-primary btn-lg">
+                                <span class="dashicons dashicons-unlock" style="vertical-align: middle;"></span>
+                                <?php _e('Iniciar Sesión', 'ultima-milla'); ?>
+                            </a>
+                            <a href="<?php echo wp_registration_url(); ?>" class="btn btn-success btn-lg">
+                                <span class="dashicons dashicons-admin-users" style="vertical-align: middle;"></span>
+                                <?php _e('Registrarse', 'ultima-milla'); ?>
+                            </a>
+                        </div>
+                        
+                        <p class="mt-4 mb-0 text-muted">
+                            <small><?php _e('El registro es gratuito y solo toma un minuto', 'ultima-milla'); ?></small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <?php
+            return ob_get_clean();
         }
         
         $user_id = get_current_user_id();
@@ -217,7 +275,7 @@ class Ultima_Milla_Shortcodes {
                     
                     <?php if (!empty($solicitudes)): ?>
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="tabla-mis-solicitudes">
                                 <thead>
                                     <tr>
                                         <th><?php _e('Código', 'ultima-milla'); ?></th>

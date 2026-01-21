@@ -1,6 +1,25 @@
 # 📦 Plugin Última Milla - WordPress
 
+**Prueba Técnica - Sistema de Gestión de Última Milla**
+
 Sistema completo de gestión de servicios de última milla (delivery tracking) con seguimiento de estados en tiempo real para clientes, mensajeros y administradores.
+
+## 🎯 Resumen Ejecutivo
+
+Este plugin fue desarrollado como prueba técnica para demostrar capacidades de desarrollo WordPress avanzado. Implementa un sistema completo de gestión de entregas con:
+
+- ✅ **Constructor de formularios dinámico** - Crea formularios personalizados desde el admin
+- ✅ **Sistema de roles personalizado** - Clientes, Mensajeros y Administradores con permisos específicos
+- ✅ **Auto-asignación de roles** - Los usuarios nuevos reciben automáticamente el rol de "Cliente Última Milla"
+- ✅ **Shortcodes protegidos** - Acceso controlado con redirección automática a Login/Registro
+- ✅ **DataTables interactivas** - Búsqueda, filtrado y paginación en todas las tablas
+- ✅ **SweetAlert2** - Alertas elegantes y confirmaciones centradas
+- ✅ **Interfaz nativa de WordPress** - Admin con estilos nativos, frontend con Bootstrap 5
+- ✅ **Sistema de estados** - Seguimiento completo: Solicitado → En Curso → Entregado/Cancelado
+- ✅ **Asignación de mensajeros** - Workflow completo de gestión de entregas
+- ✅ **Código de seguimiento único** - Formato UM-XXXXXXXX para cada solicitud
+- ✅ **100% seguro** - Nonces, sanitización, escapado y verificación de capacidades
+- ✅ **Responsive** - Compatible con móvil, tablet y desktop
 
 ---
 
@@ -173,15 +192,26 @@ El administrador puede crear formularios personalizados desde `wp-admin`.
 - Envío por AJAX sin recargar página
 - Genera código de seguimiento único
 - Confirmación visual al enviar
+- **🔒 Protección automática**: Si el usuario NO está logueado, muestra botones de Login/Registro en lugar del formulario
 
 **Shortcode 2: Mis Solicitudes**
 ```php
 [ultima_milla_mis_solicitudes]
 ```
-- Tabla Bootstrap con todas las solicitudes del usuario
+- Tabla responsive con DataTables
+- Búsqueda y filtrado en tiempo real
+- Paginación automática (10 registros por defecto)
 - Ver detalle en modal
 - Estados con colores (badges)
 - Código de seguimiento visible
+- **🔒 Protección automática**: Si el usuario NO está logueado, muestra botones de Login/Registro en lugar de la tabla
+
+**Sistema de Registro:**
+- Los usuarios se registran usando el sistema NATIVO de WordPress (`/wp-login.php?action=register`)
+- Al registrarse, automáticamente se les asigna el rol **"Cliente Última Milla"**
+- Pueden iniciar sesión con el sistema estándar de WordPress
+- NO es necesario WooCommerce
+- **URLs incluidas automáticamente**: El plugin redirige a las URLs correctas de login/registro al hacer clic en los botones
 
 ### **3. Módulo Mensajero (wp-admin)**
 
@@ -212,6 +242,15 @@ El administrador puede crear formularios personalizados desde `wp-admin`.
 - ✅ Publicar/Despublicar formularios
 - ✅ Eliminar formularios (con confirmación)
 - ✅ DataTable con búsqueda
+
+**Pantalla 3: Última Milla > Ayuda y Shortcodes**
+- ✅ Guía completa de configuración paso a paso
+- ✅ URLs de Login y Registro con botón de copiar
+- ✅ Shortcodes disponibles con ejemplos
+- ✅ Instrucciones para crear páginas
+- ✅ Explicación del sistema de auto-asignación de roles
+- ✅ Enlaces directos a páginas de configuración de WordPress
+- ✅ Tabla de comportamiento de seguridad (usuario logueado vs no logueado)
 
 ### **5. Sistema de Estados**
 
@@ -246,15 +285,32 @@ Cada solicitud genera un código único:
 - ✅ Se crea la tabla `wp_um_form_fields`
 - ✅ Se agregan capacidades al rol Administrator
 
-### **PASO 2: Crear Usuarios**
+### **PASO 2: Configurar Sistema de Registro**
 
-#### **Crear un Cliente:**
-1. Ve a **Usuarios → Añadir Nuevo**
-2. Completa los datos del usuario
-3. En **Rol**, selecciona: **"Cliente Última Milla"**
-4. Haz clic en **"Añadir Nuevo Usuario"**
+#### **Opción A: Usar la Página de Ayuda (Recomendado)**
 
-#### **Crear un Mensajero:**
+1. Ve a **Última Milla → Ayuda y Shortcodes**
+2. Encontrarás toda la información que necesitas:
+   - ✅ Guía paso a paso completa
+   - ✅ URLs de registro y login con botones de copiar
+   - ✅ Shortcodes listos para usar
+   - ✅ Botón directo para crear páginas
+   - ✅ Instrucciones de configuración del menú
+
+#### **Opción B: Configuración Manual**
+
+1. Ve a **wp-admin → Ajustes → Generales**
+2. Marca la casilla: **"Cualquiera puede registrarse"**
+3. En **"Rol predeterminado para nuevos usuarios"**, selecciona cualquiera (se ignorará, nuestro plugin asignará automáticamente "Cliente Última Milla")
+4. Haz clic en **"Guardar cambios"**
+
+**Ahora:**
+- Los usuarios irán a: `http://tu-sitio.com/wp-login.php?action=register`
+- Se registrarán normalmente
+- **Automáticamente** recibirán el rol **"Cliente Última Milla"**
+- Podrán iniciar sesión y ver sus solicitudes
+
+#### **Crear un Mensajero (Manual):**
 1. Ve a **Usuarios → Añadir Nuevo**
 2. Completa los datos del usuario
 3. En **Rol**, selecciona: **"Mensajero"**
@@ -665,6 +721,11 @@ Muestra un formulario de solicitud específico.
 - Formulario publicado
 - Bootstrap 5 se carga automáticamente
 
+**🔒 Protección de Acceso:**
+- **Usuario NO logueado**: Verá un mensaje "Acceso Restringido" con botones grandes de "Iniciar Sesión" y "Registrarse"
+- **Usuario logueado**: Verá el formulario completo para crear solicitudes
+- Los botones redirigen automáticamente a las URLs correctas de WordPress
+
 ---
 
 ### **2. `[ultima_milla_mis_solicitudes]`**
@@ -679,14 +740,40 @@ Muestra las solicitudes del usuario actual.
 [ultima_milla_mis_solicitudes]
 ```
 
-**Requiere:**
-- Usuario autenticado (logged in)
-- Muestra mensaje si no está autenticado
-
 **Dónde usar:**
 - Página de perfil del cliente
 - Área de miembros
 - Dashboard personalizado
+
+**🔒 Protección de Acceso:**
+- **Usuario NO logueado**: Verá un mensaje "Acceso Restringido" con botones de "Iniciar Sesión" y "Registrarse"
+- **Usuario logueado**: Verá la tabla completa con DataTables de todas sus solicitudes
+- Solo muestra las solicitudes del usuario actual (filtrado automático por seguridad)
+
+---
+
+## 🔐 Sistema de Registro y Roles
+
+### **Auto-Asignación de Rol**
+
+El plugin automáticamente asigna el rol **"Cliente Última Milla"** a cualquier usuario que se registre usando el sistema nativo de WordPress.
+
+**Hook utilizado:**
+```php
+add_action('user_register', 'auto_asignar_rol_cliente');
+```
+
+**Lógica:**
+- Si el usuario NO tiene rol → Se asigna "Cliente Última Milla"
+- Si el usuario tiene rol "Subscriber" → Se cambia a "Cliente Última Milla"
+- Si ya tiene otro rol (Admin, Editor, etc.) → NO se modifica
+
+**Ventajas:**
+- ✅ No necesitas WooCommerce
+- ✅ No necesitas formularios personalizados
+- ✅ Usa el sistema seguro y probado de WordPress
+- ✅ Compatible con cualquier plugin de personalización de login
+- ✅ Los usuarios pueden usar "Recordar contraseña"
 
 ---
 
@@ -804,10 +891,11 @@ WordPress Plugin License: https://www.gnu.org/licenses/gpl-2.0.html
 
 ## 👨‍💻 Créditos
 
-**Desarrollado por:** Tu Nombre  
+**Desarrollado por:** Diego CC  
 **Repositorio:** https://github.com/ccdiego5/ultimamilla  
 **Versión:** 1.0.0  
-**Fecha:** Enero 2026  
+**Fecha:** 21 de Enero 2026  
+**Propósito:** Prueba técnica - Sistema de gestión de última milla  
 
 **Librerías Utilizadas:**
 - WordPress Core
@@ -821,19 +909,22 @@ WordPress Plugin License: https://www.gnu.org/licenses/gpl-2.0.html
 
 ## 📋 Changelog
 
-### **v1.0.0 - 2026-01-20**
+### **v1.0.0 - 2026-01-21**
 - ✅ Lanzamiento inicial
 - ✅ Constructor de formularios dinámico
 - ✅ Sistema de solicitudes con seguimiento
 - ✅ Roles personalizados (Cliente, Mensajero)
-- ✅ DataTables con búsqueda y filtros
-- ✅ SweetAlert2 para alertas elegantes
-- ✅ Modales personalizados estilo WordPress
-- ✅ Shortcodes para frontend
-- ✅ Sistema de estados (4 estados)
-- ✅ Asignación de mensajeros
-- ✅ Interfaz responsive
-- ✅ Textos en español
+- ✅ Auto-asignación de rol "Cliente Última Milla" al registrarse
+- ✅ DataTables con búsqueda y filtros en admin y frontend
+- ✅ SweetAlert2 para alertas elegantes (posición centrada por defecto)
+- ✅ Modales personalizados estilo WordPress (sin Bootstrap en admin)
+- ✅ Shortcodes protegidos con sistema de Login/Registro automático
+- ✅ Página de "Ayuda y Shortcodes" con guía completa
+- ✅ Sistema de estados (4 estados con colores distintivos)
+- ✅ Asignación de mensajeros con actualización de estado automática
+- ✅ Interfaz responsive (móvil, tablet, desktop)
+- ✅ Textos en español con soporte para internacionalización
+- ✅ Integración con sistema nativo de WordPress (sin dependencias externas)
 
 ---
 
